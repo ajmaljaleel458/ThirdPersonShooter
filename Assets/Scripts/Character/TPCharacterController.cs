@@ -5,11 +5,15 @@ public class TPCharacterController : MonoBehaviour
 {
     public CharacterController characterController;
 
+    public InputManage inputManager;
+
     public float movementSpeed = 3.0f;
 
     float verticalInput, horizontalInput;
 
     public float horizontalCameraSensi = 100f;
+
+    public Animator animator;
 
 
     private Vector3 direction;
@@ -27,11 +31,17 @@ public class TPCharacterController : MonoBehaviour
 
     private void GetDirectionAndMove()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = inputManager.movement.x;
 
-        verticalInput = Input.GetAxis("Vertical");
+        verticalInput = inputManager.movement.y;
 
         direction = transform.forward * verticalInput + transform.right * horizontalInput;
+
+        if (inputManager.isSprinting) movementSpeed = 6.0f;
+        else if (inputManager.movement == Vector2.zero) movementSpeed = 0.0f;
+        else movementSpeed = 3.0f;
+
+        animator.SetFloat("Speed", movementSpeed);
 
         characterController.Move(direction * movementSpeed * Time.deltaTime);
     }
