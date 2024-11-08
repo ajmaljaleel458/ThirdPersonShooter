@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour
 {
-    public GameObject playerCamera;
+    public Camera playerCamera;
 
     InputAction scopeAction;
 
@@ -21,7 +21,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (scopeAction.WasPressedThisFrame())
         {
-            playerCamera.transform.Translate(new Vector3(0.0f, 0.0f, 100.0f));
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, 5f, 10f);
 
             scope.SetActive(true);
             crossHair.SetActive(false);
@@ -29,7 +29,8 @@ public class WeaponManager : MonoBehaviour
 
         if (scopeAction.WasReleasedThisFrame())
         {
-            playerCamera.transform.Translate(new Vector3(0.0f, 0.0f, -100.0f));
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, 60.0f, 10f);
+
             scope.SetActive(false);
             crossHair.SetActive(true);
         }
