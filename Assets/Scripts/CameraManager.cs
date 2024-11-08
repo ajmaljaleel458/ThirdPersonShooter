@@ -5,6 +5,8 @@ public class CameraManager : MonoBehaviour
     public Transform crossHair;         
     public float verticalCameraSensi = 100f; 
 
+    public WeaponManager weaponManager;
+
     public float minAngle = -30f;    
     public float maxAngle = 30f;
 
@@ -12,6 +14,10 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
+        if (weaponManager.isScoped) verticalCameraSensi = 30f;
+        else verticalCameraSensi = 100f;
+        
+
         float verticalInput = Input.GetAxis("Mouse Y");
 
         float angle = verticalInput * verticalCameraSensi * Time.deltaTime;

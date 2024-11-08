@@ -13,6 +13,8 @@ public class TPCharacterController : MonoBehaviour
 
     public float horizontalCameraSensi = 100f;
 
+    public WeaponManager weaponManager;
+
     public Animator animator;
 
 
@@ -21,6 +23,7 @@ public class TPCharacterController : MonoBehaviour
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -48,6 +51,9 @@ public class TPCharacterController : MonoBehaviour
 
     private void RotatePlayer()
     {
+        if (weaponManager.isScoped) horizontalCameraSensi = 30f;
+        else horizontalCameraSensi = 100f;
+
         float horizontalInput = Input.GetAxis("Mouse X");
 
         transform.Rotate(transform.up, horizontalInput * horizontalCameraSensi * Time.deltaTime);
